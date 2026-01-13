@@ -1,15 +1,25 @@
--- Ghoul Hub Loader ☠️
+-- GHOUL HUB | Loader.lua
+print("Ghoul Hub Loader iniciado")
 
-print("GhoulHub Loader iniciado")
+local BASE_URL = "https://raw.githubusercontent.com/mig0el787-arch/Ghoul.hub/main/"
 
--- Espera o jogo carregar
-if not game:IsLoaded() then
-	game.Loaded:Wait()
+-- Carregar Functions.lua
+local Functions = loadstring(game:HttpGet(BASE_URL .. "Functions.lua"))()
+
+if not Functions then
+	warn("Erro ao carregar Functions.lua")
+	return
 end
 
--- Carrega a UI
-loadstring(game:HttpGet(
-	"https://raw.githubusercontent.com/mig0el787-arch/Ghoul.hub/main/UI/UI.lua"
-))()
+-- Carregar UI.lua
+local UI = loadstring(game:HttpGet(BASE_URL .. "UI.lua"))
 
-print("GhoulHub UI carregada")
+if not UI then
+	warn("Erro ao carregar UI.lua")
+	return
+end
+
+-- Executar UI passando as funções
+UI(Functions)
+
+print("Ghoul Hub carregado com sucesso")
